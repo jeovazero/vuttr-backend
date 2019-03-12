@@ -1,0 +1,44 @@
+{
+  "name": "vuttr-backend",
+  "version": "1.0.0",
+  "description": "API for VUTTR",
+  "main": "index.js",
+  "author": "jeovazero",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV='production' node index.js",
+    "dev": "NODE_ENV='development' node -r dotenv/config index.js",
+    "prettier": "prettier-standard '**/*.js'",
+    "lint": "standard --env jest",
+    "lint:fix": "standard --fix --env jest '**/*.js'",
+    "test": "yarn lint && NODE_ENV='test' jest",
+    "test:watch": "yarn lint && NODE_ENV='test' jest --watch"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier-standard",
+      "standard --fix --env jest",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "husky": "^1.3.1",
+    "jest": "^24.4.0",
+    "lint-staged": "^8.1.5",
+    "prettier-standard": "^9.1.1",
+    "standard": "^12.0.1",
+    "supertest": "^4.0.0"
+  },
+  "dependencies": {
+    "joi": "^14.3.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
+}
