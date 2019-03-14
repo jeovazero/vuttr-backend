@@ -7,6 +7,14 @@ const ToolPayloadSchema = Joi.object().keys({
   tags: Joi.array().items(Joi.string())
 })
 
+const ToolSchema = ToolPayloadSchema.append({
+  id: Joi.number()
+})
+
+const ListToolSchema = Joi.array().items(ToolSchema)
+
 module.exports = {
-  ToolPayloadSchema
+  ToolPayloadSchema,
+  ToolSchema,
+  ListToolSchema
 }
