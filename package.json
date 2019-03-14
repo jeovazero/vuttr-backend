@@ -30,15 +30,27 @@
     "dotenv": "^6.2.0",
     "husky": "^1.3.1",
     "jest": "^24.4.0",
+    "jest-environment-node": "^24.5.0",
     "lint-staged": "^8.1.5",
+    "mongodb-memory-server": "^4.2.1",
     "prettier-standard": "^9.1.1",
     "standard": "^12.0.1",
     "supertest": "^4.0.0"
   },
   "dependencies": {
     "joi": "^14.3.1",
+    "joigoose": "^4.0.4",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.4.19"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "<rootDir>/utils/tests/mongoEnvironment.js",
+    "testPathIgnorePatterns": ["/node_modules/"]
+  },
+  "engine": {
+    "node" : ">=10.15.3"
   }
 }
