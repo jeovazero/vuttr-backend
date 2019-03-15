@@ -42,6 +42,12 @@ router.post('/tools', async ctx => {
   }
 })
 
+router.delete('/tools/:id', async ctx => {
+  const id = ctx.params.id || 0
+  await Tool.deleteOne({ id })
+  ctx.body = {}
+})
+
 App.use(bodyparser())
 App.use(router.routes())
 
