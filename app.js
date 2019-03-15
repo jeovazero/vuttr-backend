@@ -5,6 +5,12 @@ const bodyparser = require('koa-bodyparser')
 if (process.env.NODE_ENV === 'test') {
   const { connectDB } = require('./utils/tests/mongooseHelper')
   connectDB()
+} else if (process.env.NODE_ENV === 'development') {
+  const mongoose = require('mongoose')
+  mongoose.connect(process.env.MONGO_URI_DEV, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  })
 }
 
 const Tool = require('./models/Tool')
