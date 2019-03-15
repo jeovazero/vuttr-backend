@@ -29,6 +29,19 @@ router.get('/tools', async ctx => {
   }
 })
 
+router.post('/tools', async ctx => {
+  const tool = ctx.request.body
+  const newTool = new Tool(tool)
+  const savedTool = await newTool.save()
+  ctx.body = {
+    id: savedTool.id,
+    title: savedTool.title,
+    description: savedTool.description,
+    tags: savedTool.tags,
+    link: savedTool.link
+  }
+})
+
 App.use(bodyparser())
 App.use(router.routes())
 
