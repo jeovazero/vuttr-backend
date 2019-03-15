@@ -1,0 +1,21 @@
+version: "2"
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    networks:
+      - vuttr-network
+    image: "vuttr:api"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/vuttr-api
+    depends_on:
+      - mongo
+  mongo:
+    networks:
+      - vuttr-network
+    image: "mongo:latest"
+
+networks:
+  vuttr-network:
+    driver: bridge
