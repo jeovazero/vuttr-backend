@@ -41,6 +41,38 @@ $ sh scripts/docker-build.sh
 $ sh scripts/docker-run.sh
 ```
 
+#### Complete script
+
+```sh
+# build
+docker build -t vuttr:api .
+
+# create a network
+docker network create -d bridge vuttr-network
+
+# Run mongo in network vuttr
+docker run -d \
+    --network "vuttr-network" \
+    --rm=true \
+    --name "mongo_host" \
+    mongo
+
+# Run vuttr:api in network vuttr
+docker run -d \
+    --network "vuttr-network" \
+    --rm=true \
+    -e MONGO_URI=mongodb://mongo_host:27017/vuttr-api \
+    -p 3000:3000 \
+    --name "vuttr_api" \
+    vuttr:api
+
+```
+
+### Using docker-compose
+```
+docker-compose up
+```
+
 ## 
 
 by @jeovazero
