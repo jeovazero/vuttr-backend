@@ -11,6 +11,12 @@ if (process.env.NODE_ENV === 'test') {
     useCreateIndex: true,
     useNewUrlParser: true
   })
+} else {
+  const mongoose = require('mongoose')
+  mongoose.connect(process.env.MONGO_URI, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  })
 }
 
 const Tool = require('./models/Tool')
