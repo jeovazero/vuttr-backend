@@ -30,11 +30,16 @@ A API to VUTTR (Very Useful Tools to Remember) application
 
 ## Docker
 
+### Using only docker
 #### Building
-`docker build -t vuttr:api .`
+```sh
+$ sh scripts/docker-build.sh
+```
 
 #### Running
-`docker run -d -p 3000:3000 vuttr:api`
+```sh
+$ sh scripts/docker-run.sh
+```
 
 ## 
 
