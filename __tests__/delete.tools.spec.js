@@ -30,4 +30,23 @@ describe('[DELETE] /tools/id', () => {
     expect(remaining[0].id).toBe(2)
     expect(remaining[1].id).toBe(3)
   })
+
+  it('should try delete a nonexistent tool', async () => {
+    await populateDB()
+
+    const { text, status } = await agent.delete('/tools/99').catch(err => {
+      return err.response
+    })
+
+    expect(status).toBe(404)
+    expect(text).toBe('Not found')
+
+    const Tool = mongoose.model('Tool')
+    const remaining = await Tool.find().sort({ id: 1 })
+
+    expect(remaining.length).toBe(3)
+    expect(remaining[0].id).toBe(1)
+    expect(remaining[1].id).toBe(2)
+    expect(remaining[2].id).toBe(3)
+  })
 })

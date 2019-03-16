@@ -34,4 +34,23 @@ describe('[POST] /tools', () => {
     expect(prettier.title).toBe('prettier')
     expect(prettier.id).toBe(1)
   })
+
+  it('should try create an invalid tool', async () => {
+    const payload = {
+      _title: ['fdfsdf'],
+      description: 'Formats your code',
+      tags: ['formater', 'node'],
+      link: 'http://prettier.io'
+    }
+
+    const { text, status } = await agent
+      .post('/tools')
+      .send(payload)
+      .catch(err => {
+        return err.response
+      })
+
+    expect(text).toBe('Bad request')
+    expect(status).toBe(400)
+  })
 })
