@@ -42,22 +42,35 @@ router.get('/tools', async ctx => {
 })
 
 router.post('/tools', async ctx => {
-  const tool = ctx.request.body
-  const newTool = new Tool(tool)
-  const savedTool = await newTool.save()
-  ctx.body = {
-    id: savedTool.id,
-    title: savedTool.title,
-    description: savedTool.description,
-    tags: savedTool.tags,
-    link: savedTool.link
+  try {
+    const tool = ctx.request.body
+    const newTool = new Tool(tool)
+    const savedTool = await newTool.save()
+
+    ctx.body = {
+      id: savedTool.id,
+      title: savedTool.title,
+      description: savedTool.description,
+      tags: savedTool.tags,
+      link: savedTool.link
+    }
+    ctx.status = 200
+  } catch (e) {
+    ctx.throw(400, 'Bad request')
   }
 })
 
 router.delete('/tools/:id', async ctx => {
-  const id = ctx.params.id || 0
-  await Tool.deleteOne({ id })
-  ctx.body = {}
+  try {
+    const id = ctx.params.id || 0
+    const { deletedCount } = await Tool.deleteOne({ id })
+    if (deletedCount === 0) throw new Error('Not found')
+
+    ctx.body = {}
+    ctx.status = 200
+  } catch (e) {
+    ctx.throw(404, 'Not found')
+  }
 })
 
 App.use(bodyparser())
