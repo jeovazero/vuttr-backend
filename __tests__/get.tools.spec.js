@@ -8,9 +8,11 @@ const {
   disconnectDB,
   clearDB,
   populateDB
-} = require('../utils/tests/mongooseHelper')
+} = require('../helpers/tests/mongooseHelper')
 
-describe('[GET] /tools{?tag}', () => {
+const BASE_URL = '/api/v1/tools'
+
+describe(`[GET] ${BASE_URL}{?tag}`, () => {
   beforeAll(connectDB)
   beforeEach(clearDB)
   afterAll(disconnectDB)
@@ -19,7 +21,7 @@ describe('[GET] /tools{?tag}', () => {
     await populateDB()
 
     const { body: listTools } = await agent
-      .get('/tools')
+      .get(`${BASE_URL}`)
       .expect('Content-type', /json/)
       .expect(200)
 
@@ -37,7 +39,7 @@ describe('[GET] /tools{?tag}', () => {
     await populateDB()
 
     const { body: listTools } = await agent
-      .get('/tools')
+      .get(`${BASE_URL}`)
       .query({ tag: 'node' })
       .expect('Content-type', /json/)
       .expect(200)

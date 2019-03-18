@@ -47,7 +47,7 @@
   },
   "jest": {
     "verbose": true,
-    "testEnvironment": "<rootDir>/utils/tests/mongoEnvironment.js",
+    "testEnvironment": "<rootDir>/helpers/tests/mongoEnvironment.js",
     "testPathIgnorePatterns": ["/node_modules/"]
   },
   "engine": {

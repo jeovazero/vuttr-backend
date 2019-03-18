@@ -6,9 +6,11 @@ const {
   connectDB,
   clearDB,
   disconnectDB
-} = require('../utils/tests/mongooseHelper')
+} = require('../helpers/tests/mongooseHelper')
 
-describe('[DELETE] /tools/id', () => {
+const BASE_URL = '/api/v1/tools'
+
+describe(`[DELETE] ${BASE_URL}/id`, () => {
   beforeAll(connectDB)
   beforeEach(clearDB)
   afterAll(disconnectDB)
@@ -17,7 +19,7 @@ describe('[DELETE] /tools/id', () => {
     await populateDB()
 
     const { body } = await agent
-      .delete('/tools/1')
+      .delete(`${BASE_URL}/1`)
       .expect('Content-type', /json/)
       .expect(200)
 

@@ -7,9 +7,11 @@ const {
   connectDB,
   clearDB,
   disconnectDB
-} = require('../utils/tests/mongooseHelper')
+} = require('../helpers/tests/mongooseHelper')
 
-describe('[POST] /tools', () => {
+const BASE_URL = '/api/v1/tools'
+
+describe(`[POST] ${BASE_URL}`, () => {
   beforeAll(connectDB)
   beforeEach(clearDB)
   afterAll(disconnectDB)
@@ -23,7 +25,7 @@ describe('[POST] /tools', () => {
     }
 
     const { body: prettier } = await agent
-      .post('/tools')
+      .post(`${BASE_URL}`)
       .send(payload)
       .expect('Content-type', /json/)
       .expect(200)
