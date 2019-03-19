@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const joigoose = require('joigoose')(mongoose)
-const { ToolSchema } = require('../components/tools/tools.schema')
 
 const Counter = new mongoose.Schema({
   id: { type: String },
@@ -9,7 +7,13 @@ const Counter = new mongoose.Schema({
 Counter.index({ id: 1 })
 const counter = mongoose.model('counter', Counter)
 
-const mongooseSchema = new mongoose.Schema(joigoose.convert(ToolSchema))
+const mongooseSchema = new mongoose.Schema({
+  id: Number,
+  title: String,
+  description: String,
+  link: String,
+  tags: [String]
+})
 
 mongooseSchema.pre('save', function (next) {
   const current = this

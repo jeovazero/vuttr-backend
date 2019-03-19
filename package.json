@@ -39,7 +39,6 @@
   },
   "dependencies": {
     "joi": "^14.3.1",
-    "joigoose": "^4.0.4",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
@@ -48,9 +47,11 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "<rootDir>/helpers/tests/mongodbTestEnvironment.js",
-    "testPathIgnorePatterns": ["/node_modules/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "engine": {
-    "node" : ">=10.15.3"
+    "node": ">=10.15.3"
   }
 }
