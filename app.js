@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const KoaRouter = require('koa-router')
 const bodyparser = require('koa-bodyparser')
+const helmet = require('koa-helmet')
 const App = new Koa()
 const router = new KoaRouter()
 
@@ -26,6 +27,7 @@ const toolsService = require('./components/tools/tools.service')
 
 router.use('/api/v1/tools', toolsService.routes())
 
+App.use(helmet())
 App.use(bodyparser())
 App.use(router.routes())
 
