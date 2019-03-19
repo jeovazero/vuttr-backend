@@ -5,7 +5,7 @@ const App = new Koa()
 const router = new KoaRouter()
 
 if (process.env.NODE_ENV === 'test') {
-  const { connectDB } = require('./helpers/tests/mongooseHelper')
+  const { connectDB } = require('./helpers/tests/mongooseTestHelper')
   connectDB()
 } else if (process.env.NODE_ENV === 'development') {
   const mongoose = require('mongoose')
@@ -22,9 +22,9 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 require('./models/Tool')
-const routes = require('./routes')
+const toolsService = require('./components/tools/tools.service')
 
-router.use('/api/v1', routes)
+router.use('/api/v1/tools', toolsService.routes())
 
 App.use(bodyparser())
 App.use(router.routes())

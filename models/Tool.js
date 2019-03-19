@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const joigoose = require('joigoose')(mongoose)
-const { ToolSchema } = require('../schema.js')
+const { ToolSchema } = require('../components/tools/tools.schema')
 
 const Counter = new mongoose.Schema({
   id: { type: String },
