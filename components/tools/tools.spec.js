@@ -86,6 +86,24 @@ describe('/tools', () => {
       expect(remaining[0].id).toBe(2)
       expect(remaining[1].id).toBe(3)
     })
+
+    it('should try delete a nonexistent tool', async () => {
+      await populateDB()
+
+      const { status } = await agent.delete('/tools/99').catch(err => {
+        return err.response
+      })
+
+      expect(status).toBe(404)
+
+      const Tool = mongoose.model('Tool')
+      const remaining = await Tool.find().sort({ id: 1 })
+
+      expect(remaining.length).toBe(3)
+      expect(remaining[0].id).toBe(1)
+      expect(remaining[1].id).toBe(2)
+      expect(remaining[2].id).toBe(3)
+    })
   })
 
   describe(`[POST]`, () => {
@@ -113,5 +131,23 @@ describe('/tools', () => {
       expect(prettier.title).toBe('prettier')
       expect(prettier.id).toBe(1)
     })
+  })
+
+  it('should try create an invalid tool', async () => {
+    const payload = {
+      title: ['fdfsdf'],
+      description: 'Formats your code',
+      tags: ['formater', 'node'],
+      link: 'http://prettier.io'
+    }
+
+    const { status } = await agent
+      .post('/')
+      .send(payload)
+      .catch(err => {
+        return err.response
+      })
+
+    expect(status).toBe(400)
   })
 })
