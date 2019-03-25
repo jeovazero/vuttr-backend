@@ -4,11 +4,11 @@ const { connectDB, populateDB, clearDB, disconnectDB } = mongooseTestHelper
 
 // Mongoose
 const mongoose = require('mongoose')
-require('../../models/Tool')
+require('../../models/User')
 
 // Creating app
 const toolsService = require('./tools.service')
-const app = appHelper.use(toolsService.routes())
+const app = appHelper.app.use(toolsService.routes())
 
 // Creating agent
 const supertest = require('supertest')

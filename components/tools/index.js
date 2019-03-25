@@ -1,6 +1,7 @@
 const toolsSchema = require('./tools.schema.js')
-const toolsRoutes = require('./tools.routes.js')
+const toolsService = require('./tools.service.js')
+
 module.exports = {
-  toolsRoutes,
+  toolsService,
   toolsSchema
 }

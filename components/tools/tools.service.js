@@ -7,7 +7,9 @@ const { ToolPayloadSchema } = require('./tools.schema.js')
 
 router.get('/', async ctx => {
   const tag = ctx.query.tag || ''
-  const tools = await Tool.find({}, { _id: 0, __v: 0 }).sort({ id: 1 })
+  const tools = await Tool.find({}, { _id: 0, __v: 0, owner: 0 }).sort({
+    id: 1
+  })
 
   if (tag.length > 0) {
     ctx.body = tools.filter(el => {
