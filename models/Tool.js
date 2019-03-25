@@ -12,7 +12,8 @@ const mongooseSchema = new mongoose.Schema({
   title: String,
   description: String,
   link: String,
-  tags: [String]
+  tags: [String],
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
 mongooseSchema.pre('save', function (next) {
