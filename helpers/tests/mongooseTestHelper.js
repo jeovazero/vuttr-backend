@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Tool = require('../../models/Tool')
+const User = require('../../models/User')
 
 const mongooseOpts = {
   useFindAndModify: false,
@@ -13,10 +13,11 @@ const mongooseOpts = {
 
 const populateDB = async () => {
   const fakeTools = require('../fakedata/tools.json')
+  const fakeUser = require('../fakedata/user.json')
+  await new User(fakeUser).save()
   await Promise.all(
     fakeTools.map(tool => {
-      const record = new Tool(tool)
-      return record.save()
+      return User.findByEmailAndAddTool(fakeUser.email, tool)
     })
   )
 }
