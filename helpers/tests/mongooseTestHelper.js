@@ -14,7 +14,7 @@ const mongooseOpts = {
 const populateDB = async () => {
   const fakeTools = require('../fakedata/tools.json')
   const fakeUser = require('../fakedata/user.json')
-  await new User(fakeUser).save()
+  await new User(fakeUser).setHashPasswordAndSave()
   await Promise.all(
     fakeTools.map(tool => {
       return User.findByEmailAndAddTool(fakeUser.email, tool)
