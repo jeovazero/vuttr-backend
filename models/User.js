@@ -1,16 +1,21 @@
 const mongoose = require('mongoose')
 const Tool = require('./Tool.js')
+const argon2i = require('argon2-ffi').argon2i
+const crypto = require('crypto')
+const { promisify } = require('util')
+const randomBytes = promisify(crypto.randomBytes)
 
 const UserSchema = new mongoose.Schema({
   name: String,
-  email: { type: String, unique: true },
+  email: { type: String, unique: true, required: true },
   tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }],
-  hashPassword: String
+  password: { type: String, required: true }
 })
 
 /* TO DO */
-UserSchema.methods.comparePassword = function (password, callback) {
-  return this.hashPassword === password
+UserSchema.methods.comparePassword = async function (password, callback) {
+  const bpass = Buffer.from(password)
+  return argon2i.verify(this.password, bpass).then(result => result)
 }
 
 /**
@@ -53,11 +58,19 @@ UserSchema.statics.findByEmailAndRemoveTool = async function (email, toolId) {
  *  @returns {object} User tools
  * */
 UserSchema.statics.findByEmailAndGetTools = async function (email) {
-  const user = await this.findOne({ email }).populate(
-    'tools',
-    '-_id -owner -__v'
-  )
+  const user = await this.findOne({ email })
+    .populate('tools', '-_id -owner -__v')
+    .sort({ id: 1 })
   return user.tools
+}
+
+UserSchema.methods.setHashPasswordAndSave = async function () {
+  const bpass = Buffer.from(this.password)
+  const hashPassword = await randomBytes(32).then(salt =>
+    argon2i.hash(bpass, salt)
+  )
+  this.password = hashPassword
+  return this.save()
 }
 
 module.exports = mongoose.model('User', UserSchema)
