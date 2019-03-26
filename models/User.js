@@ -35,7 +35,7 @@ UserSchema.statics.findByEmailAndAddTool = async function (email, tool) {
  *  Find a user by email and remove a tool to your collection
  *  @param {string} email - User email
  *  @param {object} tool - Tool id
- *  @returns {object} True for success
+ *  @returns {boolean} True for success
  * */
 
 UserSchema.statics.findByEmailAndRemoveTool = async function (email, toolId) {
