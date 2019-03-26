@@ -8,10 +8,12 @@ const { ToolPayloadSchema } = require('./tools.schema.js')
 const IS_TEST = process.env.NODE_ENV === 'test'
 
 const getEmail = ctx => {
+  const user = ctx.state.user
+  const email = user && user.email
   if (IS_TEST) {
-    return 'joaoarms@mail.com'
+    return email || 'joaoarms@mail.com'
   } else {
-    return ctx.state.user.email
+    return email
   }
 }
 
@@ -29,6 +31,7 @@ router.get('/', async ctx => {
       ctx.body = tools
     }
   } catch (error) {
+    console.log({ error })
     ctx.throw(500, 'Internal Server Error')
   }
 })
@@ -39,7 +42,7 @@ router.post('/', async ctx => {
     const email = getEmail(ctx)
 
     const { error } = Joi.validate(tool, ToolPayloadSchema, { convert: false })
-    if (error) throw Error(error.details[0].message)
+    if (error) throw new Error(error.details[0].message)
 
     const savedTool = await User.findByEmailAndAddTool(email, tool)
     ctx.body = {
