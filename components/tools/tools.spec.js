@@ -112,6 +112,8 @@ describe('/tools', () => {
     afterAll(disconnectDB)
 
     it('should create a tool', async () => {
+      await populateDB()
+
       const payload = {
         title: 'prettier',
         description: 'Formats your code',
@@ -129,25 +131,27 @@ describe('/tools', () => {
       expect(error).toBeNull()
 
       expect(prettier.title).toBe('prettier')
-      expect(prettier.id).toBe(1)
+      expect(prettier.id).toBe(4)
     })
-  })
 
-  it('should try create an invalid tool', async () => {
-    const payload = {
-      title: ['fdfsdf'],
-      description: 'Formats your code',
-      tags: ['formater', 'node'],
-      link: 'http://prettier.io'
-    }
+    it('should try create an invalid tool', async () => {
+      await populateDB()
 
-    const { status } = await agent
-      .post('/')
-      .send(payload)
-      .catch(err => {
-        return err.response
-      })
+      const payload = {
+        title: ['fdfsdf'],
+        description: 'Formats your code',
+        tags: ['formater', 'node'],
+        link: 'http://prettier.io'
+      }
 
-    expect(status).toBe(400)
+      const { status } = await agent
+        .post('/')
+        .send(payload)
+        .catch(err => {
+          return err.response
+        })
+
+      expect(status).toBe(400)
+    })
   })
 })
