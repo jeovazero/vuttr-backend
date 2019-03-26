@@ -5,16 +5,13 @@ const helmet = require('koa-helmet')
 const App = new Koa()
 const router = new KoaRouter()
 
-if (process.env.NODE_ENV === 'test') {
-  const { connectDB } = require('./helpers/tests/mongooseTestHelper')
-  connectDB()
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   const mongoose = require('mongoose')
   mongoose.connect(process.env.MONGO_URI_DEV, {
     useCreateIndex: true,
     useNewUrlParser: true
   })
-} else {
+} else if (process.env.NODE_ENV === 'production') {
   const mongoose = require('mongoose')
   mongoose.connect(process.env.MONGO_URI, {
     useCreateIndex: true,
@@ -22,10 +19,13 @@ if (process.env.NODE_ENV === 'test') {
   })
 }
 
-require('./models/Tool')
-const toolsService = require('./components/tools/tools.service')
+require('./models/User')
 
-router.use('/api/v1/tools', toolsService.routes())
+const { toolsService } = require('./components/tools')
+const { authMiddleware, authService } = require('./components/auth')
+
+router.use('/api/v1/auth', authService.routes())
+router.use('/api/v1/tools', authMiddleware, toolsService.routes())
 
 App.use(helmet())
 App.use(bodyparser())
