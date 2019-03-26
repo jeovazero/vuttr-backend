@@ -71,7 +71,7 @@ router.post('/register', async ctx => {
     if (userFound) throw new Error('User already registered')
 
     const newUser = new User(userPayload)
-    await newUser.save()
+    newUser.setHashPasswordAndSave()
 
     ctx.status = 201
     ctx.body = {}
