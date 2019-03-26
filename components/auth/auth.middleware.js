@@ -12,7 +12,9 @@ const auth = async (ctx, next) => {
 
     const isAuthenticated = await TokenManagment.verify(token)
     if (!isAuthenticated) ctx.throw(401, 'User not authenticated')
-
+    ctx.state.user = {
+      email: isAuthenticated.email
+    }
     next()
   } catch (error) {
     ctx.throw(401, error.message)
