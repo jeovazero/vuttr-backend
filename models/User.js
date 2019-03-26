@@ -58,9 +58,13 @@ UserSchema.statics.findByEmailAndRemoveTool = async function (email, toolId) {
  *  @returns {object} User tools
  * */
 UserSchema.statics.findByEmailAndGetTools = async function (email) {
-  const user = await this.findOne({ email })
-    .populate('tools', '-_id -owner -__v')
-    .sort({ id: 1 })
+  const user = await this.findOne({ email }).populate({
+    path: 'tools',
+    select: '-_id -owner -__v',
+    options: {
+      sort: { id: 1 }
+    }
+  })
   return user.tools
 }
 
