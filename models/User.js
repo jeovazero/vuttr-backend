@@ -17,7 +17,7 @@ UserSchema.methods.comparePassword = function (password, callback) {
  *  Find a user by email and add a tool to your collection
  *  @param {string} email - User email
  *  @param {object} tool - Tool object
- *  @returns {object} User updated
+ *  @returns {object} Tool added
  * */
 UserSchema.statics.findByEmailAndAddTool = async function (email, tool) {
   const user = await this.findOne({ email })
@@ -27,22 +27,24 @@ UserSchema.statics.findByEmailAndAddTool = async function (email, tool) {
   if (user.tools.indexOf(id) === -1) {
     user.tools.push(id)
   }
-  return user.save()
+  await user.save()
+  return savedTool
 }
 
 /**
  *  Find a user by email and remove a tool to your collection
  *  @param {string} email - User email
  *  @param {object} tool - Tool id
- *  @returns {object} User updated
+ *  @returns {object} True for success
  * */
 
 UserSchema.statics.findByEmailAndRemoveTool = async function (email, toolId) {
   const user = await this.findOne({ email })
   const tool = Tool.findOne({ id: toolId })
   user.tools.remove(tool._id)
-  await Tool.deleteOne({ id: toolId })
-  return user.save()
+  const { deletedCount } = await Tool.deleteOne({ id: toolId })
+  await user.save()
+  return deletedCount === 1
 }
 
 /**
@@ -51,7 +53,10 @@ UserSchema.statics.findByEmailAndRemoveTool = async function (email, toolId) {
  *  @returns {object} User tools
  * */
 UserSchema.statics.findByEmailAndGetTools = async function (email) {
-  const user = await this.findOne({ email }).populate('tools')
+  const user = await this.findOne({ email }).populate(
+    'tools',
+    '-_id -owner -__v'
+  )
   return user.tools
 }
 
