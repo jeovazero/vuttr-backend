@@ -3,8 +3,6 @@ const { appHelper, mongooseTestHelper } = require('../../helpers')
 const { connectDB, populateDB, clearDB, disconnectDB } = mongooseTestHelper
 
 // Mongoose
-// const mongoose = require('mongoose')
-// require('../../models/Tool')
 require('../../models/User')
 
 // Creating app

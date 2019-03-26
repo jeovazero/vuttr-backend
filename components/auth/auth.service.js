@@ -59,7 +59,6 @@ router.delete('/', async ctx => {
 router.post('/register', async ctx => {
   try {
     const userPayload = ctx.request.body
-    // console.log({ userPayload })
 
     const { error } = Joi.validate(userPayload, UserPayloadSchema, {
       convert: false
@@ -71,7 +70,7 @@ router.post('/register', async ctx => {
     if (userFound) throw new Error('User already registered')
 
     const newUser = new User(userPayload)
-    newUser.setHashPasswordAndSave()
+    await newUser.setHashPasswordAndSave()
 
     ctx.status = 201
     ctx.body = {}

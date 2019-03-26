@@ -15,7 +15,7 @@ const auth = async (ctx, next) => {
     ctx.state.user = {
       email: isAuthenticated.email
     }
-    next()
+    await next()
   } catch (error) {
     ctx.throw(401, error.message)
   }
