@@ -38,19 +38,26 @@
     "supertest": "^4.0.0"
   },
   "dependencies": {
+    "argon2-ffi": "^1.1.2",
+    "base64url": "^3.0.1",
     "joi": "^14.3.1",
-    "joigoose": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.1.0",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.4.19"
+    "mongoose": "^5.4.19",
+    "nanoid": "^2.0.1",
+    "redis": "^2.8.0"
   },
   "jest": {
     "verbose": true,
-    "testEnvironment": "<rootDir>/utils/tests/mongoEnvironment.js",
-    "testPathIgnorePatterns": ["/node_modules/"]
+    "testEnvironment": "<rootDir>/helpers/tests/mongodbTestEnvironment.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "engine": {
-    "node" : ">=10.15.3"
+    "node": ">=10.15.3"
   }
 }

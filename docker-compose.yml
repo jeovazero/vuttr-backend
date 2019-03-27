@@ -9,12 +9,19 @@ services:
     image: "vuttr:api"
     environment:
       - MONGO_URI=mongodb://mongo:27017/vuttr-api
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       - mongo
+      - redis
   mongo:
     networks:
       - vuttr-network
     image: "mongo:latest"
+  redis:
+    networks:
+      - vuttr-network
+    image: "redis"
 
 networks:
   vuttr-network:
