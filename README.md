@@ -1,6 +1,26 @@
 # VUTTR Backend
-A API to VUTTR (Very Useful Tools to Remember) application
+A API to **VUTTR** (Very Useful Tools to Remember) application
 
+## General
+
+- Framework: koajs2
+- Database: Mongodb
+- Database Schemas: Mongoose
+- Validation Schemas: Joi
+- Test: Jest
+- Formatter: prettier-standard
+- Linter: Standard
+- Git hooks: husky
+
+## Authentication and Password Hash
+
+Utilized **JSON Web Token** for tokens, **Redis** for user keys management and **Argon2** to password hash
+
+## API Reference
+
+For API documentation was used the **API Blueprint** format then generated the html of reference with **Aglio**
+
+Access thi link [Reference](https://htmlpreview.github.io/?https://github.com/jeovazero/vuttr-backend/blob/master/docs/index.html)
 
 ## Scripts
 
@@ -41,38 +61,20 @@ $ sh scripts/docker-build.sh
 $ sh scripts/docker-run.sh
 ```
 
-#### Complete script
+### Using docker-compose
 
-```sh
-# build
-docker build -t vuttr:api .
-
-# create a network
-docker network create -d bridge vuttr-network
-
-# Run mongo in network vuttr
-docker run -d \
-    --network "vuttr-network" \
-    --rm=true \
-    --name "mongo_host" \
-    mongo
-
-# Run vuttr:api in network vuttr
-docker run -d \
-    --network "vuttr-network" \
-    --rm=true \
-    -e MONGO_URI=mongodb://mongo_host:27017/vuttr-api \
-    -p 3000:3000 \
-    --name "vuttr_api" \
-    vuttr:api
+#### Building
 
 ```
+docker-compose build
+```
 
-### Using docker-compose
+#### Running
+
 ```
 docker-compose up
 ```
 
-## 
+##
 
-by @jeovazero
+by <a href="https://github.com/jeovazero">@jeovazero</a>
