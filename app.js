@@ -4,22 +4,17 @@ const bodyparser = require('koa-bodyparser')
 const helmet = require('koa-helmet')
 const App = new Koa()
 const router = new KoaRouter()
+const { mongooseConfig } = require('./db')
 
 if (process.env.NODE_ENV === 'development') {
   const mongoose = require('mongoose')
-  mongoose.connect(process.env.MONGO_URI_DEV, {
-    useCreateIndex: true,
-    useNewUrlParser: true
-  })
+  mongoose.connect(process.env.MONGO_URI_DEV, mongooseConfig)
 } else if (process.env.NODE_ENV === 'production') {
   const mongoose = require('mongoose')
-  mongoose.connect(process.env.MONGO_URI, {
-    useCreateIndex: true,
-    useNewUrlParser: true
-  })
+  mongoose.connect(process.env.MONGO_URI, mongooseConfig)
 }
 
-require('./models/User')
+// require('./models/User')
 
 const { toolsService } = require('./components/tools')
 const { authMiddleware, authService } = require('./components/auth')

@@ -4,7 +4,7 @@ const { connectDB, populateDB, clearDB, disconnectDB } = mongooseTestHelper
 
 // Mongoose
 const mongoose = require('mongoose')
-require('../../models/User')
+require('../../db')
 
 // Creating app
 const toolsService = require('./tools.service')
