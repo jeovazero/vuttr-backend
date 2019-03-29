@@ -30,15 +30,34 @@
     "dotenv": "^6.2.0",
     "husky": "^1.3.1",
     "jest": "^24.4.0",
+    "jest-environment-node": "^24.5.0",
     "lint-staged": "^8.1.5",
+    "mongodb-memory-server": "^4.2.1",
     "prettier-standard": "^9.1.1",
     "standard": "^12.0.1",
     "supertest": "^4.0.0"
   },
   "dependencies": {
+    "argon2-ffi": "^1.1.2",
+    "base64url": "^3.0.1",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-helmet": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.4.19",
+    "nanoid": "^2.0.1",
+    "redis": "^2.8.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "<rootDir>/helpers/tests/mongodbTestEnvironment.js",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "engines": {
+    "node": ">=10.15.3"
   }
 }
