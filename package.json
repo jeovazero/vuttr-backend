@@ -57,7 +57,7 @@
       "/node_modules/"
     ]
   },
-  "engine": {
+  "engines": {
     "node": ">=10.15.3"
   }
 }
